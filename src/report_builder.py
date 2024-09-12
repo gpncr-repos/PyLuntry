@@ -44,7 +44,7 @@ class ReportBuilder:
                     ws_save.append(columns)
                     continue
 
-                values = [str(cell.value) for cell in row]
+                values = [str(cell.value) for cell in row if cell.value is not None]
 
                 # получаем значения
                 image_name = values[14]
@@ -66,6 +66,8 @@ class ReportBuilder:
                         to_append = [current_date, image_name, getpass.getuser(), 'Active']
                         found_report.extend(to_append)
                         if values[image_id_pos] == found_report[image_id_pos]:
+                            if len(values) == 18:
+                                found_report.append(str(values[-1]))
                             ws_save.append(found_report)
                         else:
                             if values[state_pos] == 'Closed':

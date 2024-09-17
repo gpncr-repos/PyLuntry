@@ -45,6 +45,11 @@ class LuntryParser:
             image_name = match.group(1)
 
             result[image_name].append(report)
+
+        # Убираем дубликаты
+        for image in result:
+            result[image] = list({v['ID']: v for v in result[image]}.values())
+
         return result
 
     @staticmethod
